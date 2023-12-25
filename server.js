@@ -23,9 +23,21 @@ app.post('/webhook', (req, res) => {
   if (message) {
     logMessageInfo(message);
   
-    if (message.photo) {
-      console.log(`  Photo(s) received: ${message.photo.map(photo => photo.file_id).join(', ')}`);
-    } else if (message.document) {
+    if (msg.photo) {
+        const photoIds = msg.photo.map(photo => photo.file_id);
+      
+        console.log(`  Photo(s) received: ${photoIds.join(', ')}`);
+      
+        photoIds.forEach(photoId => {
+          bot.getFile(photoId).then((fileInfo) => {
+            const photoUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${fileInfo.file_path}`;
+            console.log(`  Photo URL: ${photoUrl}`);
+          }).catch((error) => {
+            console.error('Error getting file information for photo:', error);
+          });
+        });
+      }
+    else if (message.document) {
       console.log(`  Document received: ${message.document.file_id}`);
     } else if (message.audio) {
       console.log(`  Audio received: ${message.audio.file_id}`);
