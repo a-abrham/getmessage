@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const MONGODB_URI = 'mongodb+srv://abrshkorra:wZKjYPwJFvuDhtvF@telegramgcmsg.osalm2g.mongodb.net/?retryWrites=true&w=majority';
-
-mongoose.connect(MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URL);
 
 const MessageSchema = new mongoose.Schema({
   messageId: Number,
