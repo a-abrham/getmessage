@@ -1,18 +1,39 @@
 async function fetchAndDisplayMessages() {
+    
+    const response = await fetch('http://localhost:3005/chatName/-1001991429503');
+    const chatName = await response.json();
+    document.querySelector('.chat-header').textContent = chatName;
+
     try {
         const response = await fetch('http://localhost:3005/messages/-1001991429503');
         const messages = await response.json();
 
         const chatMessagesContainer = document.getElementById('chatMessages');
+        let currentDay;
 
         messages.forEach(message => {
+            const messageTime = new Date(message.timestamp);
+            const day = messageTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+            if (day !== currentDay) {
+                const dayContainer = document.createElement('div');
+                dayContainer.className = 'day-container';
+
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'day-header';
+                dayHeader.textContent = day;
+
+                dayContainer.appendChild(dayHeader);
+                chatMessagesContainer.appendChild(dayContainer);
+
+                currentDay = day;
+            }
+
             const messageElement = document.createElement('div');
             messageElement.className = 'message';
 
             const timeElement = document.createElement('span');
             timeElement.className = 'message-time';
-            const timestamp = message.timestamp;
-            const messageTime = new Date(timestamp);
             timeElement.textContent = formatTime(messageTime);
             messageElement.appendChild(timeElement);
 
@@ -56,7 +77,6 @@ async function fetchAndDisplayMessages() {
             }
 
             messageElement.appendChild(textElement);
-
             chatMessagesContainer.appendChild(messageElement);
         });
     } catch (error) {
