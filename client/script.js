@@ -1,7 +1,7 @@
 async function fetchAndDisplayMessages() {
     
     const response = await fetch('http://localhost:3005/chatName/-1001991429503');
-    const chatName = await response.json();
+    const chatName = await response.text();
     document.querySelector('.chat-header').textContent = chatName;
 
     try {

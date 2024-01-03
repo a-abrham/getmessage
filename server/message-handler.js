@@ -50,7 +50,6 @@ function logMessageInfo(message, prefix = '') {
 fetchMediaUrlsPromises.push(audioUrlPromise);
 
 audioUrlPromise.then(audioUrl => {
-  // Ensure audioUrl is a string before assigning it
   savedMessage.audioUrl = Array.isArray(audioUrl) ? audioUrl[0] : audioUrl.toString();
 });
 
