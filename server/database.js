@@ -13,6 +13,7 @@ const MessageSchema = new mongoose.Schema({
   audioUrl: String,
   videoUrl: String,
   voiceUrl: String,
+  timestamp: String,
 });
 
 const MessageModel = mongoose.model('Message', MessageSchema);

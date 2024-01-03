@@ -5,6 +5,7 @@ function logMessageInfo(message, prefix = '') {
   const messageId = message.message_id;
   const chatId = message.chat.id;
   const senderUsername = message.from.username || 'N/A';
+  const timestamp = new Date(message.date * 1000).toISOString();
 
   console.log(`${prefix}Received message (${messageId}) from user ${chatId} (${senderUsername}):`);
 
@@ -18,6 +19,7 @@ function logMessageInfo(message, prefix = '') {
     audioUrl: '',
     videoUrl: '',
     voiceUrl: '',
+    timestamp: timestamp,
   });
 
   const fetchMediaUrlsPromises = [];
