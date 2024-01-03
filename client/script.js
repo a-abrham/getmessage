@@ -11,8 +11,8 @@ async function fetchAndDisplayMessages() {
 
             const timeElement = document.createElement('span');
             timeElement.className = 'message-time';
-            const timestamp = message.timestamp || 0;
-            const messageTime = new Date(timestamp * 1000);
+            const timestamp = message.timestamp;
+            const messageTime = new Date(timestamp);
             timeElement.textContent = formatTime(messageTime);
             messageElement.appendChild(timeElement);
 
