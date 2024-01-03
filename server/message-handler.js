@@ -45,11 +45,13 @@ function logMessageInfo(message, prefix = '') {
   } else if (message.audio) {
     console.log(`  Audio received: ${message.audio.file_id}`);
     const audioUrlPromise = getFileInformation(message.audio.file_id, 'Audio');
-    fetchMediaUrlsPromises.push(audioUrlPromise);
+fetchMediaUrlsPromises.push(audioUrlPromise);
 
-    audioUrlPromise.then(audioUrl => {
-      savedMessage.audioUrl = audioUrl;
-    });
+audioUrlPromise.then(audioUrl => {
+  // Ensure audioUrl is a string before assigning it
+  savedMessage.audioUrl = Array.isArray(audioUrl) ? audioUrl[0] : audioUrl.toString();
+});
+
   } else if (message.video) {
     console.log(`  Video received: ${message.video.file_id}`);
   const videoUrlPromise = getFileInformation(message.video.file_id, 'Video');
